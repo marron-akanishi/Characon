@@ -20,13 +20,13 @@ date = datetime.date.today().strftime("%m/%d")
 try:
     name = birthlist[date]
     icon = iconlist[date]
+    # アイコン回収
     if not os.path.exists("./icon.jpg"):
         urllib.request.urlretrieve(api.me().profile_image_url.replace("normal","400x400"),"./icon.jpg")
+    # アイコン変更
     api.update_profile_image(icon)
-    api.update_status("本日は{}の誕生日です".format(name))
+    api.update_with_media(icon.replace("icon","original"), "本日は{}の誕生日です".format(name))
 except:
     if os.path.exists("./icon.jpg"):
         api.update_profile_image("./icon.jpg")
         os.remove("./icon.jpg")
-
-#api.update_status("日付確認完了")
